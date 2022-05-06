@@ -1,45 +1,5 @@
 import { Todo } from '../interface/todo';
 
-/* export let arrayTodo: Todo[] = [];
-
-export function add(todo: string): Promise<Todo> {
-  return new Promise((res, rej) => {
-    setTimeout(() => {
-      const newTodo: Todo = {
-        title: todo,
-        id: arrayTodo.length + 1,
-        completed: false,
-      };
-      arrayTodo.push(newTodo);
-      res(newTodo);
-    }, 2000);
-  });
-}
-
-export function get(): Promise<Todo[]> {
-  return new Promise((res, rej) => {
-    setTimeout(() => {
-      res(arrayTodo);
-    }, 2000);
-  });
-}
-
-export function update(newTodo: Partial<Todo>, id: number): Promise<Todo> {
-  return new Promise((res, rej) => {
-    setTimeout(() => {
-      arrayTodo = arrayTodo.map((todo) =>
-        todo.id == id ? { ...todo, ...newTodo } : todo
-      );
-      const updatedTodo = arrayTodo.find((todo) => todo.id == id);
-      if (updatedTodo) {
-        res(updatedTodo);
-      } else {
-        rej('todo non trovato');
-      }
-    }, 2000);
-  });
-} */
-
 let todos: Todo[] = [];
 
 export function get(): Promise<Todo[]> {

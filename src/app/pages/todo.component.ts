@@ -4,30 +4,7 @@ import * as todoServ from '../service/todos.service';
 
 @Component({
   template: `
-    <!--  <div class="container text-center">
-      <h1 class="text-center">To do List</h1>
-      <button class="btn btn-primary my-5" id="btnRic" (click)="funcRicerca()">
-        {{ btnRicerca }}
-      </button>
-
-      <input
-        class="d-none"
-        type="text"
-        placeholder="prova"
-        id="input"
-        [(ngModel)]="todo"
-        [className]="inputTask ? 'd-block mx-auto w-50 text-center' : 'd-none'"
-      />
-
-      <p>{{ visualizza ? ricerca : '' }}</p>
-      <ul class="list-group">
-
-        <li *ngFor="let incarichi of todos; let i = index">
-          {{ incarichi.title }}
-          <button (click)="completeTask(incarichi, i)">prova</button>
-        </li>
-      </ul>
-    </div> -->
+    <h1 class="text-center">TODO LIST</h1>
 
     <div class="container mt-5">
       <div>
@@ -37,8 +14,8 @@ import * as todoServ from '../service/todos.service';
             type="text"
             [(ngModel)]="newTask"
           />
-          <button class="btn btn-primary w-50 d-block" (click)="aggiungi()">
-            Aggiungi Task
+          <button class="btn btn-primary w-25 d-block" (click)="aggiungi()">
+            <i class="bi bi-plus-square"></i>
           </button>
         </div>
         <ng-container *ngIf="task; else elseTemplate">
@@ -50,73 +27,45 @@ import * as todoServ from '../service/todos.service';
               <li
                 class="border w-50 mx-auto ps-5 d-flex justify-content-between"
               >
-                {{ t.title }}
-                <button
-                  class="btn btn-primary ms-5"
+                <span class="spanLista">{{ t.title }}</span>
+
+                <i
+                  class="bi bi-check-circle-fill me-5"
                   (click)="completeTask(t, i)"
-                >
-                  Completa
-                </button>
+                ></i>
               </li>
             </ul>
           </div>
         </ng-container>
         <ng-template #elseTemplate>
-          <p>Recupero Tasks...</p>
+          <p class="text-center mt-5">Recupero Tasks...</p>
         </ng-template>
       </div>
 
       <ng-template #elseNoTask>
-        <p>Oops, non ci sono Task</p>
+        <p class="text-center mt-5">Oops, non ci sono Task</p>
       </ng-template>
     </div>
   `,
-  styles: [],
+  styles: [
+    `
+      .bi-check-circle-fill {
+        color: green !important;
+        font-size: 2em !important;
+        cursor: pointer !important;
+      }
+
+      .bi-plus-square {
+        font-size: 1.5em !important;
+      }
+
+      .spanLista {
+        font-size: 2em !important;
+      }
+    `,
+  ],
 })
 export class TodoComponent implements OnInit {
-  /*  todo: any = '';
-  todos!: Todo[];
-
-  ricerca = 'Ricerca di Tasks...';
-  btnRicerca = 'Ricerca Task';
-  visualizza = false;
-  inputTask = false;
-  inputProva = <HTMLElement>document.querySelector('#input');
-  btnRic = <HTMLElement>document.querySelector('#btnRic');
-
-  constructor() {
-    todoServ.get().then((todos) => {
-      this.todos = todos;
-    });
-
-  }
-
-  ngOnInit(): void {}
-
-  funcRicerca() {
-    if (this.visualizza === false) {
-      this.visualizza = true;
-      setTimeout(() => {
-        this.btnRicerca = 'Aggiungi Task';
-        return (this.ricerca = 'Nessun Incarico trovato');
-      }, 2000);
-    } else if (this.visualizza === true && this.inputTask === false) {
-      this.inputTask = true;
-    } else if (this.visualizza === true && this.inputTask === true) {
-      todoServ.add(this.todo).then(() => {
-        this.todo = '';
-      });
-    } else {
-      alert('FINALMENTE HAI SMESSO DI NON FARE NULLA');
-    }
-  }
-
-  async completeTask(todoro: Todo, i: number) {
-    await todoServ.update({ completed: true }, todoro.id);
-    console.log(this.todos);
-
-  } */
-
   task!: Todo[];
   newTask!: string;
 
@@ -129,7 +78,7 @@ export class TodoComponent implements OnInit {
   ngOnInit(): void {}
 
   async aggiungi() {
-    if (this.newTask != undefined) {
+    if (this.newTask !== undefined && this.newTask !== '') {
       console.log(this.newTask);
       const nTodo = await todoServ.aggiungi({
         title: this.newTask as string,
